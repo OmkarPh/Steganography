@@ -44,7 +44,7 @@
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li><a href="http://omkarph.rf.gd">Home</a></li>
+          <li><a href="http://omkarph.rf.gd/">Home</a></li>
           <li><a href="http://omkarph.rf.gd/protected/cvportfolio/">About Me</a></li>
           <li><a href="http://omkarph.rf.gd/NotesAndUploads/">Notes & stuff</a></li>
           <li class="menu-has-children"  class="menu-active"><a href="#">Projects</a>
@@ -108,12 +108,27 @@
                         <br><br>
                         <p id="info">
                             Steganography is the technique of hiding secret data within an ordinary, non-secret,
-                            file or message in order to avoid detection; the secret data is then extracted at its 
+                            file or message in order to avoid detection; <br>the secret data is then extracted at its 
                             destination. Here, you can try out hiding an image inside another or
                             extract the hidden image from an already steganographed image.<a href="https://en.wikipedia.org/wiki/Steganography"> Read more..</a>
-                        </p>
-                        
-                            <form class="imgdiv">
+                            
+                            </p>
+                          
+                          <button id="hideMode" onclick="hideMode()">Hide</button>
+                          |
+                          <button id="extractMode" onclick="extractMode()">Extract</button>
+                          
+                          <span id="info" style="margin-left:80px; font-size: 17px;">Choose images with resolution less than 1920 X 1080 pixels and prefer similar dimensional images.
+                          <br><a target="_blank" href="https://github.com/OmkarPh/Steganography" style="font-size: 25px; float: right; ">
+                                  <u>Source code <i class="fas fa-location-arrow"></i></u>
+                              </a>
+                          <br>
+                          </span>
+                          <hr color="white">
+                          
+                          <!--  Hiding images starts here  --> 
+                          <div id="hideContext">
+                            <form class="imgdiv" id="hideForm">
                                 <canvas class="uploadimg" id="hideIMGcanvas">
                                 </canvas>
                                 <!--<button class="uploadBtn">Upload image</button>-->
@@ -122,7 +137,7 @@
                               </form>
 
 
-                            <form class="imgdiv" style="margin-left: 2%;">
+                            <form class="imgdiv" style="margin-left: 2%;" id="coverForm"> 
                                 <canvas class="uploadimg" id="inthisIMGcanvas">
                                 </canvas>
                                 <!--<button class="uploadBtn">Upload image</button>-->
@@ -131,16 +146,69 @@
                             </form>
                             <br>
                             <center><button onclick="dothestuff()" id="hideBTN">Hide</button></center>
-                            
-                            <form class="imgdiv" style="margin-left: 2%;" id="result">
+                            <p id="info">Steganographed image: </p>
+                            <form class="imgdiv" style="margin-left: 2%; height: 75vh;" id="result">
                               <canvas class="uploadimg" id="resultCanvas">
                               </canvas>
                             </form>
-                            <br><br>
-                              <form class="imgdiv" style="margin-left: 2%; margin-top: 10px;" id="extraction">
+                
+                            <br><br><br>
+
+                            <a id="download" download="downloadedFrom_omkarph_rf_gd.png.png">
+                              <button type="button" onClick="download()">Download</button>
+                            </a>
+
+                            <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                            <p id="info">After extracting above image using my tool, output will be as follows: </p>
+                            
+                            
+                              <form class="imgdiv" style="margin-left: 2%; margin-top: 10px; height: 75vh;" id="extraction">
                                 <canvas class="uploadimg" id="extractionCanvas">
                                 </canvas>
                               </form>
+                            <br>
+
+                            <a id="downloadOriginal" download="downloadedFrom_omkarph_rf_gd.png">
+                              <button type="button" onClick="downloadOriginalIMG()">Download</button>
+                            </a>
+                            </div>
+                            
+                          <!--  Hiding images ends here  --> 
+                        
+                          <!-- Extracting image starts here  -->
+                          <div id="extractContext" style="visibility: hidden; margin-top: -187vh; position: absolute;">
+                            <p id="info">Select the image file to extract the underlying hidden image.</p>
+                            <form class="imgdiv" id="extractSrc" style="margin-left: 2%; width: 80%; height: 80vh;
+                              background: #1D976C;
+                              background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);  
+                              background: linear-gradient(to right, #93F9B9, #1D976C);
+                            ">
+                              <canvas class="uploadimg" id="extractSrcImgCanvas" style="height: 70vh;">
+                              </canvas>
+                              <input type="file" multiple="false" accept="image/*" id="extractSrcInput" class="inp" onchange="uploadExtractSrc()">
+                            </form>
+                            <br><br><br>
+
+
+                            <br><br><br><br><br><br><br><br><br><br><br><br>
+                            <center><button onclick="doExtraction()" id="hideBTN" style="height: 15vh;font-size: 50px; width: 30%;">Extract</button></center>
+                            <bt></bt>
+                            <h2> Hidden image: </h2>
+                            <form class="imgdiv" id="extractResult" style="margin-left: 2%; width: 80%; margin-top: 1vh; height: 80vh;
+                            background: #1D976C;
+                            background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);  
+                            background: linear-gradient(to right, #93F9B9, #1D976C);
+                            ">
+                              <canvas class="uploadimg" id="extractResultImgCanvas"  style="height: 77vh;">
+                              </canvas>
+                            </form>
+                            <br><br>
+                            <a id="downloadExtracted" download="downloadedFrom_omkarph_rf_gd.png.png">
+                              <button type="button" onClick="downloadExtractedIMG()">Download</button>
+                            </a>
+                          </div>
+                        
+                           <!--Extracting image ends here  -->
             <br><br><br><br>
                 </div>
         </div>
