@@ -26,8 +26,8 @@
   <link href="../css/style.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
 
-  <script type="text/javascript" src="steganograph.js"></script>
   <script type="text/javascript" src="library.js"></script>
+  <script type="text/javascript" src="steganograph.js"></script>
 </head>
 
 <body onload="loadCover()">
@@ -44,7 +44,7 @@
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li><a href="http://omkarph.rf.gd/">Home</a></li>
+          <li><a href="http://omkarph.rf.gd">Home</a></li>
           <li><a href="http://omkarph.rf.gd/protected/cvportfolio/">About Me</a></li>
           <li><a href="http://omkarph.rf.gd/NotesAndUploads/">Notes & stuff</a></li>
           <li class="menu-has-children"  class="menu-active"><a href="#">Projects</a>
@@ -112,16 +112,24 @@
                             destination. Here, you can try out hiding an image inside another or
                             extract the hidden image from an already steganographed image.<a href="https://en.wikipedia.org/wiki/Steganography"> Read more..</a>
                             
+                            <a target="_blank" href="https://github.com/OmkarPh/Steganography" style="font-size: 25px; float: right; ">
+                              <u>Source code <i class="fas fa-location-arrow"></i></u>
+                          </a>
+                          <br><br>
+                          Choose what to hide/extract inside another image: 
+                          <button id="imageMode" onclick="imageMode()">Image</button>
+                          |
+                          <button id="textMode" onclick="textMode()">Text</button>
                             </p>
-                          
+
+
+
                           <button id="hideMode" onclick="hideMode()">Hide</button>
                           |
                           <button id="extractMode" onclick="extractMode()">Extract</button>
                           
                           <span id="info" style="margin-left:80px; font-size: 17px;">Choose images with resolution less than 1920 X 1080 pixels and prefer similar dimensional images.
-                          <br><a target="_blank" href="https://github.com/OmkarPh/Steganography" style="font-size: 25px; float: right; ">
-                                  <u>Source code <i class="fas fa-location-arrow"></i></u>
-                              </a>
+                          <br>
                           <br>
                           </span>
                           <hr color="white">
@@ -132,8 +140,10 @@
                                 <canvas class="uploadimg" id="hideIMGcanvas">
                                 </canvas>
                                 <!--<button class="uploadBtn">Upload image</button>-->
-                                <h2 class="text">Hide this <i class="fa fa-arrow-up" aria-hidden="true"></i></h2>
+                                <h2 class="text" id="hd">Hide this <i class="fa fa-arrow-up" aria-hidden="true"></i></h2>
                                 <input type="file" multiple="false" accept="image/*" id="hideIMG" class="inp" onchange="uploadHIDE()">
+                                <br><br><br>
+                                <textarea style="margin-left: 1%; width: 97%; height: 70%;" id="textToHide" cols="50" rows="10" placeholder="Enter the text to hide here"></textarea>
                               </form>
 
 
@@ -142,7 +152,7 @@
                                 </canvas>
                                 <!--<button class="uploadBtn">Upload image</button>-->
                                 <h2 class="text">Inside this <i class="fa fa-arrow-up" aria-hidden="true"></i></h2>
-                                <input type="file" multiple="false" accept="image/*" id="inthisIMG" class="inp" onchange="uploadINSIDE()">
+                                <input type="file" multiple="false" accept="image/*" id="inthisIMG" class="inp" onchange="uploadINSIDE(this)">
                             </form>
                             <br>
                             <center><button onclick="dothestuff()" id="hideBTN">Hide</button></center>
@@ -159,7 +169,7 @@
                             </a>
 
                             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                            <p id="info">After extracting above image using my tool, output will be as follows: </p>
+                            <p id="info"><span id="afterExtracting">After extracting above image using my tool, output will be as follows: </span></p>
                             
                             
                               <form class="imgdiv" style="margin-left: 2%; margin-top: 10px; height: 75vh;" id="extraction">
@@ -176,7 +186,7 @@
                           <!--  Hiding images ends here  --> 
                         
                           <!-- Extracting image starts here  -->
-                          <div id="extractContext" style="visibility: hidden; margin-top: -187vh; position: absolute;">
+                          <div id="extractContext" style="visibility: hidden; margin-top: -165vh; position: absolute;">
                             <p id="info">Select the image file to extract the underlying hidden image.</p>
                             <form class="imgdiv" id="extractSrc" style="margin-left: 2%; width: 80%; height: 80vh;
                               background: #1D976C;
@@ -185,7 +195,7 @@
                             ">
                               <canvas class="uploadimg" id="extractSrcImgCanvas" style="height: 70vh;">
                               </canvas>
-                              <input type="file" multiple="false" accept="image/*" id="extractSrcInput" class="inp" onchange="uploadExtractSrc()">
+                              <input type="file" multiple="false" accept="image/*" id="extractSrcInput" class="inp" onchange="uploadExtractSrc(this)">
                             </form>
                             <br><br><br>
 
@@ -193,7 +203,7 @@
                             <br><br><br><br><br><br><br><br><br><br><br><br>
                             <center><button onclick="doExtraction()" id="hideBTN" style="height: 15vh;font-size: 50px; width: 30%;">Extract</button></center>
                             <bt></bt>
-                            <h2> Hidden image: </h2>
+                            <h2> Hidden content: </h2>
                             <form class="imgdiv" id="extractResult" style="margin-left: 2%; width: 80%; margin-top: 1vh; height: 80vh;
                             background: #1D976C;
                             background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);  
@@ -201,10 +211,12 @@
                             ">
                               <canvas class="uploadimg" id="extractResultImgCanvas"  style="height: 77vh;">
                               </canvas>
+                              <br><br>
+                              <textarea id="extractedText" readonly = "readonly" style="width: 97%; margin-left: 1%; height: 60%;">Extracted text will appear here</textarea>
                             </form>
                             <br><br>
                             <a id="downloadExtracted" download="downloadedFrom_omkarph_rf_gd.png.png">
-                              <button type="button" onClick="downloadExtractedIMG()">Download</button>
+                              <button type="button" onClick="downloadExtractedIMG()" id="downloadExtractedImageInHide">Download</button>
                             </a>
                           </div>
                         
@@ -246,12 +258,12 @@
               </div>
 
               <div>
-                <i class="fa fa-phone"></i>
+                <i class="fab fa-whatsapp" aria-hidden="true"></i>
                 <p><a href="https://wa.me/917045270840" style="color: blue; text-decoration: underline;">+91 704 527 0840</a></p>
               </div>
             </div>
 
-              <a class="btn" href="#">
+              <a class="btn" href="https://www.linkedin.com/in/omkarphansopkar">
                 <i class="fab fa-linkedin"></i>
               </a>
               <a class="btn" href="https://github.com/OmkarPh">
