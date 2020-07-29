@@ -261,7 +261,7 @@ function uploadINSIDE(inputForTextHandling){
 
 function loadCover(){
     var startCanvas = document.getElementById("inthisIMGcanvas");
-    start = new SimpleImage("../static/Photos/originalCover.jpg");
+    start = new SimpleImage("../../static/Photos/originalCover.jpg");
     start.drawTo(startCanvas);
 }
 
