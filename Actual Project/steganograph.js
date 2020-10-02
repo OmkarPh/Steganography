@@ -90,14 +90,6 @@ function imageMode(){
                 middle3 = Math.floor(r2/8);
 
                 left2 = Math.floor(( charCode % 256 - r2 ) / 64);
-                //console.log(charCode);
-                //var value = left2*64 + middle3*8 + right3;
-                //console.log('decrypted:'+value);
-                //console.log('Pixel at x, '+pixelResult.getX()+' y, '+pixelResult.getY());
-                //console.log(clear2bits(pixel.getRed())+left2);
-                //console.log(clear3bits(pixel.getGreen())+middle3);
-                //console.log(clear3bits(pixel.getBlue())+right3);
-                //console.log(' ');
                 
                 console.log('lmr: '+left2+' '+middle3+' '+right3);
                 pixelResult.setRed(clear2bits(pixel.getRed())+left2);
@@ -289,7 +281,6 @@ function cropIMGs(){
 }
 
 function clearBits(colorval){
-    // Zero out the low bits
     var x = Math.floor(colorval/16) * 16;
     return x;
 }
@@ -346,8 +337,6 @@ function dothestuff(){
     // All canvas obtained
     var resultCanvas = document.getElementById("resultCanvas");
     var extractCanvas = document.getElementById("extractionCanvas");
-    // var hideCanvas = document.getElementById("hideIMGcanvas");
-    // var startCanvas = document.getElementById("inthisIMGcanvas");
 
     if(operationModeOn == 1){
         // If text is operation mode:
@@ -365,19 +354,13 @@ function dothestuff(){
     }
     else if( (hide.getHeight() != start.getHeight()) || (hide.getWidth() != start.getWidth())){
         cropIMGs();
-        alert("Cover image cropped to match up the resolution of hidden image !");
     }
         
     
 
-    //if(coverChanged > 0)
     start = chop2hide(start);
-    //start.drawTo(resultCanvas);
-    //alert("Start chopping done");
     
     hide = shift(hide);
-    //hide.drawTo(resultCanvas);
-    //alert("hide shifting done");
 
 
 
@@ -449,3 +432,5 @@ function downloadExtractedIMG(){
         .replace("image/png", "image/octet-stream");
     download.setAttribute("href", image);
 }
+
+alert("Steganography project started");
